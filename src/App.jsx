@@ -221,10 +221,13 @@ shortCopies는 정확히 5개 이상, en/ko 쌍으로 작성.`;
           "anthropic-version": "2023-06-01",
           "anthropic-dangerous-direct-browser-access": "true"
         },
-        body: JSON.stringify({ model: "claude-sonnet-5", max_tokens: 2000, messages: [{ role: "user", content: prompt }] })
+        body: JSON.stringify({ model: "claude-sonnet-5", max_tokens: 4000, messages: [{ role: "user", content: prompt }] })
       });
       const data = await res.json();
       if (data.error) throw new Error(data.error.message);
+      if (data.stop_reason === "max_tokens") {
+  throw new Error("응답이 너무 길어 잘렸습니다. max_tokens를 늘려주세요.");
+}
       const raw = data.content.map(c => c.text || "").join("").replace(/```json|```/g, "").trim();
       const jsonMatch = raw.match(/\{[\s\S]*\}/);
       const parsed = JSON.parse(jsonMatch ? jsonMatch[0] : raw);
