@@ -221,7 +221,7 @@ shortCopies는 정확히 5개 이상, en/ko 쌍으로 작성.`;
           "anthropic-version": "2023-06-01",
           "anthropic-dangerous-direct-browser-access": "true"
         },
-        body: JSON.stringify({ model: "claude-sonnet-4-20250514", max_tokens: 2000, messages: [{ role: "user", content: prompt }] })
+        body: JSON.stringify({ model: "claude-sonnet-5", max_tokens: 2000, messages: [{ role: "user", content: prompt }] })
       });
       const data = await res.json();
       if (data.error) throw new Error(data.error.message);
